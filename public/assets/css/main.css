@@ -1,0 +1,20 @@
+
+.soura{
+    border-radius: 10px;
+    box-shadow: 5px 10px 18px  rgb(218, 213, 213);
+}
+.soura img{
+    border-radius: 10px;
+
+}
+
+.card-footer
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-footer a{
+    margin-bottom: 15px;
+}
