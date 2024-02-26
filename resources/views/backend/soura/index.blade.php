@@ -24,7 +24,6 @@
                                 <th scope="col">#</th>
                                 <th scope="col">اسم السورة</th>
                                 <th scope="col">الوصف</th>
-
                                 <th scope="col">الملف</th>
                                 <th scope="col">القارئ</th>
                                 <th scope="col">عدد التنزيلات</th>
@@ -52,12 +51,12 @@
                                         <td>{{$soura->download}}</td>
                                         <td>{{$soura->size}}bytes</td>
                                         <td>
-                                            <a href="{{route('soura.edit',$soura->id)}}">
+                                            <a href="{{route('soura.edit',$soura)}}">
                                                 <button class="btn btn-info">تعديل</button>
                                             </a>
                                         </td>
                                         <td>
-                                            <form action="{{route('soura.destroy',$soura->id)}}" method="post"
+                                            <form action="{{route('soura.destroy',$soura)}}" method="post"
                                                   onSubmit="return confirm('Do you want to delete?')">@csrf
                                                 {{method_field('DELETE')}}
                                                 <button type="submit" class="btn btn-danger">حذف</button>
@@ -75,7 +74,7 @@
 
                             </tbody>
                         </table>
-                {{$souras->links()}}
+                           {{$souras->links()}}
                     </div>
                 </div>
             </div>

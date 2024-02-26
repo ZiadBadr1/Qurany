@@ -12,7 +12,7 @@ class SouraController extends Controller
      */
     public function index()
     {
-        $ringtones = Soura::paginate(20);
+        $ringtones = Soura::paginate(8);
         return view('index',compact('ringtones'));
     }
 
@@ -36,7 +36,14 @@ class SouraController extends Controller
     }
     public function category($id)
     {
-        $ringtones = Soura::where('category_id',$id)->paginate(20);
+        $order = collect([
+            ["id" => 101, "product" => "laptop" , "price" => 1200],
+            ["id" => 103, "product" => "mouse" , "price" => 20],
+            ["id" => 102, "product" => "headphone" , "price"=>100],
+]);
+        $returnValue = $order->sortBy('product');
+        dd($returnValue);
+        $ringtones = Soura::where('category_id',$id)->paginate(8);
         return view('frontend.ringtone-category',compact('ringtones'));
     }
 

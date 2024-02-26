@@ -10,13 +10,12 @@ class SouraCardController extends Controller
 {
     public function index()
     {
-        $soura = SouraCard::paginate(20);
+        $soura = SouraCard::paginate(8);
         return view('frontend.index',compact('soura'));
     }
     public function show($title)
     {
-        $souras = Soura::where('title',$title)->paginate(20);
-//        dd($souras);
+        $souras = Soura::where('title',$title)->paginate(8);
         return view('frontend.souras',compact('souras'));
     }
 

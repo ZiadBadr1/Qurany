@@ -17,23 +17,20 @@ use Illuminate\Support\Facades\Route;
 //    return view('welcome');
 //});
 
-Route::controller(\App\Http\Controllers\Backend\SouraCardController::class)->prefix('backend')->name('card.')->middleware('auth')->group(function () {
-    Route::get('/card', 'index')->name('index');
-    Route::get('/card/create',  'create')->name('create');
-    Route::post('/card/store', 'store')->name('store');
-    Route::get('/card/edit/{id}', 'edit')->name('edit');
-    Route::put('/card/update/{id}', 'update')->name('update');
-    Route::delete('/card/delete/{id}','destroy')->name('destroy');
+Route::group([
+    'prefix' => 'admin',
 
+],function ()
+{
+    Route::resource('card',\App\Http\Controllers\Backend\SouraCardController::class);
 });
 
-Route::controller(\App\Http\Controllers\Backend\SouraController::class)->prefix('backend')->name('soura.')->middleware('auth')->group(function () {
-    Route::get('/soura', 'index')->name('index');
-    Route::get('/soura/create',  'create')->name('create');
-    Route::post('/soura/store', 'store')->name('store');
-    Route::get('/soura/edit/{id}', 'edit')->name('edit');
-    Route::put('/soura/update/{id}', 'update')->name('update');
-    Route::delete('/soura/delete/{id}','destroy')->name('destroy');
+Route::group([
+    'prefix' => 'admin',
+
+],function ()
+{
+    Route::resource('soura',\App\Http\Controllers\Backend\SouraController::class);
 });
 
 Route::controller(\App\Http\Controllers\Frontend\SouraCardController::class)->prefix('frontend')->name('front.card.')->group(function () {

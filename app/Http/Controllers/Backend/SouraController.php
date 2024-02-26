@@ -15,7 +15,7 @@ class SouraController extends Controller
      */
     public function index()
     {
-        $souras = Soura::simplePaginate(10);
+        $souras = Soura::paginate(10);
         return view('backend.soura.index',compact('souras'));
     }
 
@@ -32,23 +32,14 @@ class SouraController extends Controller
      */
     public function store(CreateSouraRequest $request)
     {
-        $file  = $request->file('file')->store('audios','public');
-        $size = $request->file('file')->getSize();
-        $format = $request->file('file')->getClientOriginalExtension();
-        Soura::create(
-            [
-                'title' => $request->title,
-                'description' => $request->description,
-                'slug' => Str::slug($request->title),
-                'file' => $file,
-                'size' => $size,
-                'format' => $format ,
-                'category_id' => $request->category,
-                'soura_title'=>$request->title
-            ]
-        );
-
-        return redirect('backend/soura')->with('success','تمت الاضافة بنجاح ');
+        $attributes = $request->validated();
+        $attributes['slug'] = Str::slug($request->title);
+        $attributes['file']  = $request->file('file')->store('audios','public');
+        $attributes['size'] = $request->file('file')->getSize();
+        $attributes['format'] = $request->file('file')->getClientOriginalExtension();
+        $attributes['soura_title'] = $request->title;
+        Soura::create($attributes);
+        return redirect()->back()->with('success','تمت الاضافة بنجاح ');
     }
 
     /**
@@ -62,53 +53,37 @@ class SouraController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Soura $soura)
     {
-
-        $soura = Soura::where('id',$id)->with('category')->first();
         return view('backend.soura.edit',compact('soura'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(SouraUpdateRequest $request, string $id)
+    public function update(SouraUpdateRequest $request, Soura $soura)
     {
-        $soura = Soura::where('id',$id)->first();
-        $file  = $soura->file;
-        $size = $soura->size;
-        $format = $soura->format;
-        $downloads = $soura->download;
-
+        $attributes = $request->validated();
+        $attributes['slug'] = Str::slug($request->title);
+        $attributes['soura_title'] = $request->title;
         if($request->hasFile('file'))
         {
-            $file  = $request->file('file')->store('audios','public');
-            $size = $request->file('file')->getSize();
-            $format = $request->file('file')->getClientOriginalExtension();
+            $attributes['file']= $request->file('file')->store('audios','public');
+            $attributes['size'] = $request->file('file')->getSize();
+            $attributes['format'] = $request->file('file')->getClientOriginalExtension();
             unlink(public_path('/storage/'.$soura->file));
-            $downloads = 0;
+            $attributes['downloads'] = 0;
         }
-        $soura->update(
-            [
-                'title' => $request->title,
-                'description' => $request->description,
-                'slug' => Str::slug($request->title),'file' => $file,
-                'size' => $size,
-                'format' => $format ,
-                'category_id' => $request->category,
-                'download' => $downloads
-            ]
-        );
-        return redirect('backend/soura')->with('success','تم التعديل بنجاح ');
+        $soura->update($attributes);
+        return redirect()->back()->with('success','تم التعديل بنجاح ');
 
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Soura$soura)
     {
-        $soura = Soura::where('id',$id)->first();
         $file = $soura->file;
         $soura->delete();
         unlink(public_path('/storage/'.$file));

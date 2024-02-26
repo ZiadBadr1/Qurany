@@ -5,8 +5,8 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                @if(Session::has('message'))
-                    <div class="alert alert-success">{{Session::get('message')}}</div>
+                @if(Session::has('success'))
+                    <div class="alert alert-success">{{Session::get('success')}}</div>
                 @endif
 
                 <div class="card">
@@ -14,7 +14,7 @@
                     <div class="card-header text-right">تعديل كارت</div>
 
                     <div class="card-body">
-                        <form action="{{route('card.update',[$card->id])}}" method="post"  style="direction: rtl" enctype="multipart/form-data">@csrf
+                        <form action="{{route('card.update',$card)}}" method="post"  style="direction: rtl" enctype="multipart/form-data">@csrf
                             @method('PUT')
                             <div class="form-group text-right" >
                                 <label>اسم الكارت</label>

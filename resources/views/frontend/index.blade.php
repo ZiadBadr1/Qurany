@@ -23,6 +23,9 @@
                 <div style="margin-top: 100px">
                     <p style="width: 100%; text-align: center; margin-top: 200px">لا يوجد سور بعد سيتم الاضافة قريبا</p></div>
             @endif
+            <div class="justify-content-center">
+               <span> {{ $soura->links() }}</span>
+            </div>
         </div>
     </div>
 @endsection

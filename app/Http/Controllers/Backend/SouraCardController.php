@@ -13,7 +13,7 @@ class SouraCardController extends Controller
      */
     public function index()
     {
-        $cards = SouraCard::simplePaginate(10);
+        $cards = SouraCard::Paginate(10);
         return view('backend.cards.index',compact('cards'));
     }
 
@@ -36,13 +36,13 @@ class SouraCardController extends Controller
 
         if($card)
         {
-            return redirect('card')->with('error','هذه السورة موجوده بالفعل ');
+            return redirect('card')->with('error','هذا الكارت موجوده بالفعل ');
 
         }
         SouraCard::create([
             'title' => $request->title
         ]);
-        return redirect('backend/card')->with('success','تمت الاضافة بنجاح ');
+        return redirect()->back()->with('success','تمت الاضافة بنجاح ');
 
     }
 
@@ -57,21 +57,16 @@ class SouraCardController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit(SouraCard $card)
     {
-        $card = SouraCard::where('id',$id   )->first();
-
         return view('backend.cards.edit',compact('card'));
-
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request,SouraCard $card)
     {
-        $card = SouraCard::where('id',$id)->first();
-
         $request->validate([
             'title' => 'required'
         ]);
@@ -79,21 +74,19 @@ class SouraCardController extends Controller
         $card->update([
             'title' => $request->title
         ]);
-        return redirect('backend/card')->with('success','تم التعديل بنجاح ');
+        return redirect()->back()->with('success','تم التعديل بنجاح ');
 
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(SouraCard $card)
     {
-        $card = SouraCard::where('id',$id)->first();
         if ($card) {
         $card->delete();
         return redirect()->back()->with('success', 'تم الحذف بنجاح');
     }
-
         // Handle the case where the card with the given title is not found
         return redirect()->back()->with('error', 'لم يتم العثور على البطاقة');
 

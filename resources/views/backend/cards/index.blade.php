@@ -35,12 +35,12 @@
                                         <th scope="row">{{$key+1}}</th>
                                         <td>{{$card->title}}</td>
                                         <td>
-                                            <a href="{{route('card.edit',[$card->id])}}">
+                                            <a href="{{route('card.edit',$card)}}">
                                                 <button class="btn btn-info">تعديل</button>
                                             </a>
                                         </td>
                                         <td>
-                                            <form action="{{route('card.destroy',[$card->id])}}" method="post"
+                                            <form action="{{route('card.destroy',$card)}}" method="post"
                                                   onSubmit="return confirm('Do you want to delete?')">@csrf
                                                 {{method_field('DELETE')}}
                                                 <button type="submit" class="btn btn-danger">حذف</button>
@@ -58,9 +58,6 @@
                             </tbody>
                         </table>
                         {{$cards->links()}}
-
-
-
                     </div>
                 </div>
             </div>

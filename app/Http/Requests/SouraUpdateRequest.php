@@ -32,9 +32,10 @@ class SouraUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title'=>'required|min:3|max:100',
-            'description'=>'required|min:3|max:500',
-            'category'=>'required'
+            'title' => 'required|min:3|max:100',
+            'description' => 'required|min:3|max:500',
+            'file' => ['nullable','mimes:mpga,wav,mp3,acc','max:3000'],
+            'category_id' => 'required'
         ];
     }
 }

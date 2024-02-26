@@ -35,7 +35,7 @@ class CreateSouraRequest extends FormRequest
             'title' => ['required' , 'min:6' , 'max:50'],
             'description' =>['required' , 'max:255'],
             'file' => ['required','mimes:mpga,wav,mp3,acc','max:3000'],
-            'category' =>['required']
+            'category_id' =>['required']
         ];
     }
 }

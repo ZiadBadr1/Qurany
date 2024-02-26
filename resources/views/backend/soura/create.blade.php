@@ -5,8 +5,8 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                @if(Session::has('message'))
-                    <div class="alert alert-success">{{Session::get('message')}}</div>
+                @if(Session::has('success'))
+                    <div class="alert alert-success">{{Session::get('success')}}</div>
                 @endif
 
                 <div class="card">
@@ -52,7 +52,7 @@
                             </div>
                             <div class="form-group text-right">
                                 <label>اختر القارئ</label>
-                                <select class="form-control  @error('category') is-invalid @enderror" name="category">
+                                <select class="form-control  @error('category') is-invalid @enderror" name="category_id">
                                     <option value="">اختر القارئ</option>
                                     @foreach(App\Models\Category::all() as $category)
                                         <option value="{{$category->id}}">{{$category->name}}</option>
